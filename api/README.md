@@ -1,4 +1,4 @@
-# `api/``
+# `api/`
 
 The backend service to handle data requests.
 
