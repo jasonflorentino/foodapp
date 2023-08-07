@@ -1,6 +1,6 @@
 # `database/`
 
-Where the db file is. And everything else used to make it.i
+Where the db file is. And everything else used to make it.
 
 # Source
 
