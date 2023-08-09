@@ -1,5 +1,11 @@
 package storage
 
+import (
+	"fmt"
+	"net/url"
+	"strconv"
+)
+
 type FoodName struct {
 	FoodId            string     `json:"id"`
 	Code              NullInt64  `json:"code"`
@@ -13,8 +19,27 @@ type FoodName struct {
 	ScientificName    NullString `json:"scientific_name"`
 }
 
-func AllFoodNames() ([]FoodName, error) {
-	rows, err := db.Query(`
+func AllFoodNames(params url.Values) ([]FoodName, error) {
+	limitSql := "LIMIT 100"
+	offsetSql := "OFFSET 0"
+
+	if limit, err := strconv.Atoi(params.Get("limit")); err != nil {
+		// Dont care, could be empty
+	} else {
+		if limit > 0 && limit <= 200 {
+			limitSql = fmt.Sprintf("LIMIT %d", limit)
+		}
+	}
+
+	if offset, err := strconv.Atoi(params.Get("offset")); err != nil {
+		// Dont care, could be empty
+	} else {
+		if offset > 0 {
+			offsetSql = fmt.Sprintf("OFFSET %d", offset)
+		}
+	}
+
+	rows, err := db.Query(fmt.Sprintf(`
 		SELECT 
 			FoodId, 
 			FoodCode, 
@@ -26,8 +51,8 @@ func AllFoodNames() ([]FoodName, error) {
 			FoodDateOfPublication, 
 			CountryCode, 
 			ScientificName  
-		FROM Food_Name;
-	`)
+		FROM Food_Name %s %s;
+	`, limitSql, offsetSql))
 	if err != nil {
 		return nil, err
 	}

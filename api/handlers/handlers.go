@@ -8,7 +8,8 @@ import (
 )
 
 func Foods(w http.ResponseWriter, r *http.Request) {
-	foodNames, err := storage.AllFoodNames()
+
+	foodNames, err := storage.AllFoodNames(r.URL.Query())
 	if err != nil {
 		log.Fatal(err)
 	}
