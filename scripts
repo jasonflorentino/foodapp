@@ -1,0 +1,10 @@
+NAME="foodapp"
+
+if [[ $1 == 'dev' ]]
+then
+	echo "$NAME: Starting dev apps..."
+	(cd api; ./scripts dev) & (cd client; ./scripts dev)
+else
+	echo "Expected a command to be given:"
+	echo "dev"
+fi

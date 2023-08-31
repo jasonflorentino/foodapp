@@ -1,0 +1,15 @@
+NAME="client"
+PORT="3000"
+API_PORT="8080"
+
+if [[ $1 == 'dev' ]]
+then
+	echo "$NAME: Starting build watcher..."
+	PORT=$PORT API_PORT=$API_PORT $(go env GOPATH)/bin/air 
+elif [[ $1 == 'build' ]]
+then
+	echo "build"
+else
+	echo "$NAME: Expected a command to be given:"
+	echo "$NAME: dev"
+fi

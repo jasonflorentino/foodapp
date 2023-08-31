@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"api/handlers"
 	"api/storage"
@@ -14,13 +15,18 @@ func main() {
 		log.Fatal(err)
 	}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	log.Println("Setting up handlers")
 	mux := http.NewServeMux()
 	mux.HandleFunc("/foods", handlers.Foods)
 	mux.HandleFunc("/measure-names", handlers.MeasureNames)
 
-	log.Println("Listening on :8080...")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	log.Println("Listening on :" + port)
+	if err := http.ListenAndServe(":"+port, mux); err != nil {
 		log.Fatal("Error starting server:", err)
 	}
 }
