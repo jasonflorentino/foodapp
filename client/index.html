@@ -13,7 +13,7 @@
       <form action="/search" method="GET">
         <input
           autofocus
-          value=""
+          value="{{ .Query }}"
           placeholder="Enter a food"
           type="search"
           name="q"
@@ -21,8 +21,19 @@
       </form>
     </header>
     <main>
-      <h1 class="headline">Hello World!</h1>
-      <p>Welcome to my site</p>
+      <section>
+        <h1 class="headline">Hello World!</h1>
+        <p>Welcome to my site</p>
+      </section>
+      <section>
+        <ul>
+          {{ range.Results }}
+          <li>
+            <h3>{{ .Description }}</h3>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
     </main>
   </body>
 </html>

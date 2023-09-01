@@ -1,21 +1,37 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"time"
 
 	"client/service"
 )
 
+type Search struct {
+	Query      string
+	NextPage   int
+	TotalPages int
+	Results    *[]service.FoodName // *service.Results
+}
+
 var tpl = template.Must(template.ParseFiles("index.html"))
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	tpl.Execute(w, nil)
+	buf := &bytes.Buffer{}
+	err := tpl.Execute(buf, nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	buf.WriteTo(w)
 }
 
 func searchHandler(api *service.Client) http.HandlerFunc {
@@ -43,7 +59,27 @@ func searchHandler(api *service.Client) http.HandlerFunc {
 			return
 		}
 
-		fmt.Printf("results: %+v", results)
+		nextPage, err := strconv.Atoi(page)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		search := &Search{
+			Query:      searchQuery,
+			NextPage:   nextPage,
+			TotalPages: 10, // int(math.Ceil(float64(results.TotalResults) / float64(api.PageSize))),
+			Results:    results,
+		}
+
+		buf := &bytes.Buffer{}
+		err = tpl.Execute(buf, search)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		fmt.Printf("buf: %+v", buf)
+		buf.WriteTo(w)
 	}
 }
 
