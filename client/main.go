@@ -1,4 +1,4 @@
-package main
+package client
 
 import (
 	"bytes"
@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	"client/service"
+	"github.com/jasonflorentino/foodapp/client/service"
 )
 
 type Search struct {

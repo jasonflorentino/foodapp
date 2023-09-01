@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"api/storage"
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/jasonflorentino/foodapp/api/storage"
 )
 
 func Foods(w http.ResponseWriter, r *http.Request) {

@@ -1,12 +1,12 @@
-package main
+package api
 
 import (
 	"log"
 	"net/http"
 	"os"
 
-	"api/handlers"
-	"api/storage"
+	"github.com/jasonflorentino/foodapp/api/handlers"
+	"github.com/jasonflorentino/foodapp/api/storage"
 )
 
 func main() {

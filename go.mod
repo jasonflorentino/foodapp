@@ -1,4 +1,4 @@
-module api
+module github.com/jasonflorentino/foodapp
 
 go 1.17
 
