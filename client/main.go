@@ -1,4 +1,4 @@
-package client
+package main
 
 import (
 	"bytes"
@@ -54,7 +54,6 @@ func searchHandler(api *service.Client) http.HandlerFunc {
 
 		results, err := api.FetchEverything(searchQuery, page)
 		if err != nil {
-			fmt.Printf("%+v", results)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -78,7 +77,7 @@ func searchHandler(api *service.Client) http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		fmt.Printf("buf: %+v", buf)
+
 		buf.WriteTo(w)
 	}
 }
