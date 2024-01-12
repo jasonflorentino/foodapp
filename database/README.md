@@ -24,7 +24,7 @@ If you want to make adjustments to that script and run it again, you'll either n
 
 ## Create the DB
 
-Now that the data is in better shape, we can create the DB, tables, and records. The ensure we have better types than just `TEXT`, we need to create the tables with SQL. I don't want to write all that SQL, so let's have sqlite do most of the work for us. There's still a bit of manual work, but we should only have to run through it the one time.
+Now that the data is in better shape, we can create the DB, tables, and records. To ensure we have better types than just `TEXT`, we need to create the tables with SQL. I don't want to write all that SQL, so let's have sqlite do most of the work for us. There's still a bit of manual work, but we should only have to run through it the one time.
 
 ### 1. Generate most of the necessary `CREATE TABLE` SQL
 
